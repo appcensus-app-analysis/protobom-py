@@ -1,0 +1,11 @@
+**/*_pb2.py
+**/*_pb2.pyi
+**/*.wasm
+__pycache__/
+dist/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.pdm-build/
+.mypy_cache/
+.pdm-python

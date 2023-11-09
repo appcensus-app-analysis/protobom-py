@@ -1,0 +1,35 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "protobom-py"
+version = "0.1a2"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE.txt" }
+authors = [
+    { name = "Maximilian Hils" }
+]
+dependencies = [
+    "protobuf",
+    "wasmtime",
+]
+
+[project.urls]
+Source = "https://github.com/appcensus-app-analysis/protobom-py"
+
+
+[tool.pdm.build]
+excludes = ["**/*.proto"]
+source-includes = [
+    "protobom_py/*.proto",
+    "protobom-writer/*",
+]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+    "pytest-cov",
+]

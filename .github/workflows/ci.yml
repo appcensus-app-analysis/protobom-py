@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    tags:
+      - '**'
+
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install pdm from PyPI
+        uses: install-pinned/pdm@8a1964a4d70aa07d5bef56db7f0fc3af76591887
+      - uses: ./.github/actions/pre-build
+      - run: pdm install
+      - run: pdm run pytest --cov-fail-under=100
+
+  build:
+    uses: mhils/workflows/.github/workflows/python-build.yml@v4
+    with:
+      build-backend: pdm-backend
+      build-offline: false
+
+  deploy:
+    uses: mhils/workflows/.github/workflows/python-deploy.yml@v4
+    needs: [build, test]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    secrets:
+      password: ${{ secrets.TWINE_PASSWORD }}
