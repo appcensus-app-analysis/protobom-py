@@ -37,6 +37,6 @@ def pdm_build_initialize(context: Context) -> None:
 
 def pdm_build_update_files(context: Context, files: dict[str, Path]) -> None:
     if context.target == "sdist":
-        files.pop("protobom_py/sbom_pb2.py")
-        files.pop("protobom_py/sbom_pb2.pyi")
-        files.pop("protobom_py/writer.wasm")
+        files.pop("protobom_py/sbom_pb2.py", None)
+        files.pop("protobom_py/sbom_pb2.pyi", None)
+        files.pop("protobom_py/writer.wasm", None)

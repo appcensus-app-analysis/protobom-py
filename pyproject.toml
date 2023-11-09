@@ -3,8 +3,8 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project]
-name = "protobom_py"
-version = "0.1a1"
+name = "protobom-py"
+version = "0.1a2"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE.txt" }
@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/mhils/protobom-py"
+Source = "https://github.com/appcensus-app-analysis/protobom-py"
 
 
 [tool.pdm.build]
@@ -31,4 +31,5 @@ source-includes = [
 dev = [
     "ruff",
     "pytest",
+    "pytest-cov",
 ]
