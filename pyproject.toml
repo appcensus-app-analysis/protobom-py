@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "protobom_py"
-version = "0.1a1"
+version = "0.1a2"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE.txt" }
@@ -31,4 +31,5 @@ source-includes = [
 dev = [
     "ruff",
     "pytest",
+    "pytest-cov",
 ]

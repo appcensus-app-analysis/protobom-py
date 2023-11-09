@@ -1,0 +1,14 @@
+name: 'install-pinned/autoflake'
+description: 'Securely install the latest autoflake release from PyPI'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-go@v4
+      with:
+        go-version: '1.21.4'
+    - shell: bash
+      run: |
+        wget -q https://github.com/protocolbuffers/protobuf/releases/download/v25.0/protoc-25.0-linux-x86_64.zip
+        echo "d26c4efe0eae3066bb560625b33b8fc427f55bd35b16f246b7932dc851554e67 protoc-25.0-linux-x86_64.zip" | sha256sum -c
+        unzip protoc-25.0-linux-x86_64.zip -d $HOME/.local

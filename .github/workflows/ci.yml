@@ -27,13 +27,15 @@ jobs:
           python-version: '3.10'
       - name: Install pdm from PyPI
         uses: install-pinned/pdm@8a1964a4d70aa07d5bef56db7f0fc3af76591887
+      - uses: ./.github/actions/pre-build
       - run: pdm install
-      - run: pdm run pytest
+      - run: pdm run pytest --cov-fail-under=100
 
   build:
     uses: mhils/workflows/.github/workflows/python-build.yml@v4
     with:
       build-backend: pdm-backend
+      build-offline: false
 
   deploy:
     uses: mhils/workflows/.github/workflows/python-deploy.yml@v4
