@@ -1,7 +1,7 @@
 # protobom-py
 
 ![CI Status](https://github.com/appcensus-app-analysis/protobom-py/actions/workflows/main.yml/badge.svg?branch=main)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/protobom-py)
+![Supported Python Versions](https://shields.io/badge/python-%3E=3.10-blue)
 ![PyPI - Version](https://img.shields.io/pypi/v/protobom-py)
 
 
