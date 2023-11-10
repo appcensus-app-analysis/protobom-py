@@ -27,6 +27,15 @@ See `tests/test_protobom.py` for more in-depth examples.
 
 ## Development
 
+### Development Setup
+
+You can install `protobom-py` locally using `pip install -e .` or `pdm install`
+if you want to pick up dependencies from the lockfile.
+Building from source requires a working [`protoc` compiler](https://protobuf.dev/) >= v25.0 and [Go](https://go.dev/) >= 1.21.
+See [`pdm_build.py`](./pdm_build.py) for details.
+
+After making changes to `protobom-writer` or `sbom.proto`, run `pip install -e .` again to rebuild compiled artifacts.
+
 ### Tests
 
 The project maintains a strict 100% test coverage. You can run tests locally as follows:
@@ -55,3 +64,10 @@ To simplify distribution, `protobom_py` uses an alternative approach:
 3. `protobom_py` uses `wasmtime` to execute the wasm binary when `convert()` is called.
 
 The WASM binary works across platforms, so only a single binary distribution is needed.
+
+### Shipping a release
+
+1. Ensure that CI is passing.
+2. Updat `pyproject.toml` with the correct version.
+3. Push a matching tag.
+4. Manually confirm the deploy step in CI.
