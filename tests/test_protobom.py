@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from protobom_py import _writer_wasm
 from protobom_py import convert
 from protobom_py import sbom_pb2
@@ -8,27 +10,21 @@ from protobom_py import sbom_pb2
 here = Path(__file__).parent.absolute()
 
 
-def test_has_wasm():
-    assert _writer_wasm()
-
-
 def test_convert():
-    assert (
-        json.loads(
-            convert((here / "testdata/curl.spdx.json.proto").read_bytes(), "spdx")
-        )["SPDXID"]
-        == "SPDXRef-DOCUMENT"
+    """Test conversion from an on-disk Protobom model to SPDX and CycloneDX"""
+    spdx = json.loads(
+        convert((here / "testdata/curl.spdx.json.proto").read_bytes(), "spdx")
     )
+    assert spdx["SPDXID"] == "SPDXRef-DOCUMENT"
 
-    assert (
-        json.loads(
-            convert((here / "testdata/curl.spdx.json.proto").read_bytes(), "cyclonedx")
-        )["bomFormat"]
-        == "CycloneDX"
+    cyclonedx = json.loads(
+        convert((here / "testdata/curl.spdx.json.proto").read_bytes(), "cyclonedx")
     )
+    assert cyclonedx["bomFormat"] == "CycloneDX"
 
 
 def test_manual():
+    """Test manual creation of a Protobom model and subsequent conversion."""
     # Create a new protobom document
     document = sbom_pb2.Document()
 
@@ -93,6 +89,7 @@ def test_manual():
 
     spdx = json.loads(convert(document, "spdx"))
 
+    # Protobuf randomizes map order, so we sort to ensure equality.
     spdx["files"] = sorted(spdx["files"], key=lambda x: x["SPDXID"])
     for file in spdx["files"]:
         file["checksums"] = sorted(file["checksums"], key=lambda x: x["algorithm"])
@@ -161,3 +158,18 @@ def test_manual():
         ],
         "spdxVersion": "SPDX-2.3",
     }
+
+
+def test_invalid_protobom():
+    with pytest.raises(RuntimeError):
+        convert(b"invalid", "spdx")
+
+
+def test_invalid_format():
+    with pytest.raises(RuntimeError):
+        convert((here / "testdata/curl.spdx.json.proto").read_bytes(), "invalid")  # type: ignore
+
+
+def test_has_wasm():
+    """This test merely asserts that the WASM blob is available."""
+    assert _writer_wasm()

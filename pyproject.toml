@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "protobom-py"
-version = "0.1a2"
+version = "0.1b1"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE.txt" }
@@ -19,6 +19,26 @@ dependencies = [
 [project.urls]
 Source = "https://github.com/appcensus-app-analysis/protobom-py"
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "mypy",
+    "types-protobuf",
+    "pdm-backend",
+]
+
+[tool.pdm.scripts]
+test = { composite = [
+    "ruff .",
+    "pytest --cov=protobom_py --cov-report term-missing",
+    "mypy ."
+] }
+fmt = { composite = [
+    "ruff --fix-only .",
+    "ruff format .",
+] }
 
 [tool.pdm.build]
 excludes = ["**/*.proto"]
@@ -27,9 +47,7 @@ source-includes = [
     "protobom-writer/*",
 ]
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "ruff",
-    "pytest",
-    "pytest-cov",
+[tool.coverage.run]
+omit = [
+    "protobom_py/*_pb2.py",
 ]

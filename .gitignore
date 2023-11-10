@@ -9,3 +9,4 @@ dist/
 .pdm-build/
 .mypy_cache/
 .pdm-python
+.coverage

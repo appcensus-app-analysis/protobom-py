@@ -12,10 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # Fix lint errors with https://github.com/charliermarsh/ruff
-      - uses: install-pinned/ruff@486c15a01a34df13a06027021ae58ab2aa95e629
-      - run: ruff --fix-only .
-      - run: ruff format .
-
+      - name: Install pdm from PyPI
+        uses: install-pinned/pdm@8a1964a4d70aa07d5bef56db7f0fc3af76591887
+      - run: pdm run fmt
       - uses: autofix-ci/action@d3e591514b99d0fca6779455ff8338516663f7cc

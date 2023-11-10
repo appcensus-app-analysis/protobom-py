@@ -1,3 +1,7 @@
+"""
+This package is a Python wrapper for [bom-squad/protobom](https://github.com/bom-squad/protobom/).
+It can be used to generate Protobom SBOMs, and convert them to SPDX and CycloneDX.
+"""
 from functools import cache
 from importlib.resources import files
 from pathlib import Path
@@ -25,6 +29,12 @@ def _writer_wasm() -> bytes:
 
 
 def convert(sbom: Document | bytes, to: Literal["cyclonedx", "spdx"]) -> str:
+    """
+    Convert a Protobom model to either SPDX or CycloneDX representation.
+
+    This method may be called with either a raw protocol buffer as bytes,
+    or an `.sbom_pb2.Document` instance.
+    """
     with TemporaryDirectory() as tmpdir:
         stdin_file = Path(tmpdir) / "stdin"
         stdout_file = Path(tmpdir) / "stdout"
