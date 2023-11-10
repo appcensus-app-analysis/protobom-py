@@ -7,6 +7,8 @@ runs:
     - uses: actions/setup-go@v4
       with:
         go-version: '1.21.4'
+        cache-dependency-path: |
+          protobom-writer/go.sum
     - shell: bash
       run: |
         wget -q https://github.com/protocolbuffers/protobuf/releases/download/v25.0/protoc-25.0-linux-x86_64.zip
