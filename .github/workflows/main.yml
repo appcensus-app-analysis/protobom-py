@@ -28,7 +28,7 @@ jobs:
       - name: Install pdm from PyPI
         uses: install-pinned/pdm@8a1964a4d70aa07d5bef56db7f0fc3af76591887
       - uses: ./.github/actions/pre-build
-      - run: pdm install --no-lock
+      - run: pdm sync
       - run: pdm run test
 
   build:
