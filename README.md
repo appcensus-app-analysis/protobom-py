@@ -29,7 +29,7 @@ See `tests/test_protobom.py` for more in-depth examples.
 
 ### Tests
 
-The project maintains a strict 100% test coverage. You can run testing locally as follows:
+The project maintains a strict 100% test coverage. You can run tests locally as follows:
 ```shell
 pdm run test
 ```
@@ -50,8 +50,8 @@ extensions, this approach would require `{Windows, Linux, macOS} x {Python 3.10,
 individual wheel distributions, which is not very sustainable. 
 To simplify distribution, `protobom_py` uses an alternative approach:
 
-1. `./protobom-writer` contains a small Go binary that converts a Protobom passed via stdin to either SPDX or CycloneDX.
+1. `./protobom-writer` contains a small Go binary that converts a Protobom file to either SPDX or CycloneDX.
 2. This binary is compiled to Go's WebAssembly/WASI target.
 3. `protobom_py` uses `wasmtime` to execute the wasm binary when `convert()` is called.
 
-As the WASM binary works across platforms, only a single binary distribution is needed.
+The WASM binary works across platforms, so only a single binary distribution is needed.
